@@ -7,11 +7,6 @@ $(document).ready(function (){
 $('#Search').on('submit', function(e){
 
     e.preventDefault()
-
-
-
-})
-
     let $search = $('#newSearch').val().replaceAll(' ','+')
     console.log($search)
     $.get(
@@ -43,4 +38,9 @@ $('#Search').on('submit', function(e){
     );
 
     console.log('done loading')
+
+
+})
+
+
 });
