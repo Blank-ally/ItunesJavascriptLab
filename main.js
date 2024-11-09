@@ -4,21 +4,33 @@ $(document).ready(function (){
         q: 'javascript',
         maxResults:24,
     }
+
+    let $search = $('#newSearch').val().replaceAll(' ','+');
+    let limit = '&limit=25.';
+    entity = '&entity=collectionName'
+    GetResults ($search)
 $('#Search').on('submit', function(e){
 
     e.preventDefault()
-    let $search = $('#newSearch').val().replaceAll(' ','+')
-    console.log($search)
-    $.get(
-        'https://itunes.apple.com/search?term=' + $search,
-        params,
-        function(data){
-            console.log('results',data)
-            console.log(data.results[0].collectionName)
+    $('#results').empty()
+    GetResults ($search)
+    //console.log($search)
 
-            for( let item of data.results){
 
-                $('#results').append(`
+})
+
+
+    function GetResults (search) {
+        $.get(
+            'https://itunes.apple.com/search?term=' + search + limit,
+            params,
+            function(data){
+                console.log('results',data)
+
+
+                for( let item of data.results){
+
+                    $('#results').append(`
                   <div class="col">
             <div class="card">
                 <img src="${item.artworkUrl100}" class="card-img-top" >
@@ -31,16 +43,14 @@ $('#Search').on('submit', function(e){
         </div>
                 `)
 
-            }
+                }
 
-        },
-        'json'
-    );
+            },
+            'json'
+        );
 
-    console.log('done loading')
+        console.log('done loading')
 
-
-})
-
+    }
 
 });
